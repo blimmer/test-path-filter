@@ -1,0 +1,60 @@
+on:
+  push:
+    tags:
+      - deploy/prod/*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Get All Tags
+      #   run: |
+      #     git tag --list "deploy/prod/*" --sort=-v:refname > /tmp/all_tags.txt
+
+      # - name: Find Last Successful Tag
+      #   id: find_last_successful_tag
+      #   run: |
+      #     # Initialize variables
+      #     LAST_SUCCESSFUL_TAG=""
+
+      #     # Iterate over tags
+      #     while IFS= read -r tag; do
+      #       echo "Checking tag: $tag"
+
+      #       # Get the latest workflow run for the tag
+      #       workflow_run=$(gh run list --branch "$tag" --json conclusion,status -q '.[0]')
+
+      #       # Extract status and conclusion
+      #       conclusion=$(echo "$workflow_run" | jq -r '.conclusion')
+      #       status=$(echo "$workflow_run" | jq -r '.status')
+
+      #       # If the last workflow run was successful, save it
+      #       if [[ "$conclusion" == "success" && "$status" == "completed" ]]; then
+      #         echo "Last successful tag: $tag"
+      #         LAST_SUCCESSFUL_TAG=$tag
+      #         break
+      #       fi
+      #     done < /tmp/all_tags.txt
+
+      #     # Output the last successful tag
+      #     echo "last_successful_tag=$LAST_SUCCESSFUL_TAG" >> "$GITHUB_OUTPUT"
+      #     echo "last_successful_tag_sha=$(git rev-parse $LAST_SUCCESSFUL_TAG)" >> "$GITHUB_OUTPUT"
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - uses: dorny/paths-filter@v3
+      #   id: filter
+      #   with:
+      #     filters: |
+      #       _common: &common
+      #         - '.tool-versions'
+      #       cdk:
+      #         - *common
+      #         - 'cdk/**'
+      #     base: ${{ steps.find_last_successful_tag.outputs.last_successful_tag_sha }}
+
+      - name: Deploy
+        run: echo "always runs"
+
+      # - name: CDK Deploy
+      #   if: ${{ steps.filter.outputs.cdk }}
+      #   run: echo "cdk deploy"
