@@ -59,5 +59,5 @@ jobs:
         run: echo "always runs"
 
       - name: CDK Deploy
-        if: ${{ steps.filter.outputs.cdk }}
+        if: ${{ steps.filter.outputs.cdk == 'true' }}
         run: echo "cdk deploy"
