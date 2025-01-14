@@ -7,6 +7,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all tags
       - name: Get All Tags
         run: |
           git tag --list "deploy/prod/*" --sort=-v:refname > /tmp/all_tags.txt
